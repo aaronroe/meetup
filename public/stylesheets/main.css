@@ -25,3 +25,11 @@
 .hidden {
     visibility: hidden;
 }
+
+.lookahead {
+    position: absolute;
+}
+
+.lookahead-element {
+      display: block;
+}
