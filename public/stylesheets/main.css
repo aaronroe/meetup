@@ -17,3 +17,11 @@
     margin: 20px 0;
     font-size: 26px;
 }
+
+.shown {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}

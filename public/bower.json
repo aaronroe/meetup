@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "angular": "latest",
-    "bootstrap": "latest"
+    "bootstrap": "latest",
+    "fuse": "latest"
   }
 }

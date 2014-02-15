@@ -11,4 +11,11 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
+    public static Result locationsJSON() {
+        return ok("[{\"name\": \"Brochstein\"}, " +
+                "{\"name\": \"Coffeehouse\"}," +
+                "{\"name\": \"Valhalla\"}," +
+                "{\"name\": \"Willy's Pub\"}]");
+    }
+
 }
