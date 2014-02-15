@@ -5,14 +5,22 @@
 
     <div class="proposition" ng-controller="propositionCtrl">
         <h1 class="text-center">Hello <input type="text" class="input-underlined" />!</h1>
-        <h1 class="text-center">I would love to buy you a drink sometime at <input ng-model="locationInput" ng-focus="locationsOpen = true" type="text" class="input-underlined" /></h1>
-        <h1 class="text-center">and talk about <input type="text" class="input-underlined" />.</h1>
+        <h1 class="text-center">I would love to buy you a drink sometime at <input ng-model="locationInput" ng-focus="openLocationsResults()" type="text" class="input-underlined" /></h1>
+        <h1 class="text-center">and talk about <input ng-model="topicInput" ng-focus="openTopicsResults()" type="text" class="input-underlined" />.</h1>
 
-        <button type="button" class="btn btn-success btn-submit">Invite</button>
+        <button type="button" class="btn btn-success btn-submit">Send Invite</button>
 
         <div class="locationResults">
             <ul class="lookahead" ng-class="{shown: locationsOpen, hidden: !locationsOpen}">
                 <li class="lookahead-element" ng-repeat="result in locationSearchResults | limitTo:4" require focus ng-click="selectLocationOption(result)">
+                    <a href="">{{result.name}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="topicResults">
+            <ul class="lookahead" ng-class="{shown: topicsOpen, hidden: !topicsOpen}">
+                <li class="lookahead-element" ng-repeat="result in topicSearchResults | limitTo:5" require focus ng-click="selectTopicOption(result)">
                     <a href="">{{result.name}}</a>
                 </li>
             </ul>
