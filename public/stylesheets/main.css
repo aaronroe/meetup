@@ -9,4 +9,11 @@
 .proposition {
     width: 90%;
     margin: 0 auto;
+    text-align: center;
+}
+
+.btn-submit {
+    padding: 10px 30px;
+    margin: 20px 0;
+    font-size: 26px;
 }
