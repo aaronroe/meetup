@@ -1,0 +1,11 @@
+.input-underlined {
+    width: 300px;
+    border:0;
+    border-bottom:solid 1px #000;
+    outline:none;
+}
+
+.proposition {
+    width: 90%;
+    margin: 0 auto;
+}
