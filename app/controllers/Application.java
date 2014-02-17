@@ -86,8 +86,7 @@ public class Application extends Controller {
                 "{\"name\": \"Jewish Studies\"}," +
                 "{\"name\": \"Mathematics\"}," +
                 "{\"name\": \"Poverty, Justice, and Human Capabilities\"}," +
-                "{\"name\": \"Sociology\"}," +
-                "{\"name\": \"Statistics\"}" +
+                "{\"name\": \"Sociology\"}" +
                 "]");
     }
 
