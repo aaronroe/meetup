@@ -17,7 +17,7 @@
 
                     <div class="locationResults">
                         <ul class="lookahead" ng-class="{shown: locationsOpen, hidden: !locationsOpen}">
-                            <li class="lookahead-element" ng-repeat="result in locationSearchResults | limitTo:4" require focus ng-click="selectLocationOption(result)">
+                            <li class="lookahead-element" ng-repeat="result in locationSearchResults | limitTo:4" require focus ng-mousedown="selectLocationOption(result)">
                                 <a class="lookahead-link" href="">{{result.name}}</a>
                             </li>
                         </ul>
@@ -35,7 +35,7 @@
 
                     <div class="topicResults">
                         <ul class="lookahead" ng-class="{shown: topicsOpen, hidden: !topicsOpen}">
-                            <li class="lookahead-element" ng-repeat="result in topicSearchResults | limitTo:5" require focus ng-click="selectTopicOption(result)">
+                            <li class="lookahead-element" ng-repeat="result in topicSearchResults | limitTo:5" require focus ng-mousedown="selectTopicOption(result)">
                                 <a class="lookahead-link" href="">{{result.name}}</a>
                             </li>
                         </ul>
