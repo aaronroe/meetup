@@ -10,9 +10,13 @@ import views.html.*;
 
 public class Application extends JavaController {
 
-    @RequiresAuthentication(clientName = "CasClient")
     public static Result index() {
         return ok(index.render());
+    }
+
+    @RequiresAuthentication(clientName = "CasClient")
+    public static Result proposition() {
+        return ok(proposition.render());
     }
 
     public static Result locationsJSON() {

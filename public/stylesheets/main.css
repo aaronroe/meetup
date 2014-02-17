@@ -1,3 +1,38 @@
+html,body {
+    margin:0;
+    padding:0;
+    height:100%;
+    width:100%;
+}
+
+/**
+ * Index
+ */
+
+.index-wrapper {
+    padding: 100px;
+    text-align: center;
+    background-color: #eee;
+    height:100%;
+    width:100%;
+    overflow:hidden; /* or overflow:auto; if you want scrollbars */
+}
+
+.index-wrapper h1 {
+    font-size: 63px;
+}
+
+#topics {
+    height: 75px;
+    width: 600px;
+    margin: 0 auto;
+    border-bottom:solid 1px #000;
+}
+
+/**
+ * Proposition
+ */
+
 .input-underlined {
     width: 300px;
     text-indent: 10px;

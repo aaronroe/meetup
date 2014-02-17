@@ -1,0 +1,52 @@
+@()
+
+@main("Meet Up!") {
+    <h3 class="text-center alert alert-success">Invite someone to meet up!</h3>
+
+    <div class="proposition" ng-controller="propositionCtrl">
+        <div>
+            <h1 class="text-center">Hello <input type="text" class="input-underlined" />!</h1>
+
+        </div>
+
+        <div>
+            <h1 class="text-center">
+                I would love to buy you a drink sometime at
+                <div class="input-wrapper">
+                    <input ng-model="locationInput" ng-blur="closeLocationsResults()" ng-focus="openLocationsResults()" type="text" class="input-underlined" />
+
+                    <div class="locationResults">
+                        <ul class="lookahead" ng-class="{shown: locationsOpen, hidden: !locationsOpen}">
+                            <li class="lookahead-element" ng-repeat="result in locationSearchResults | limitTo:4" require focus ng-mousedown="selectLocationOption(result)">
+                                <a class="lookahead-link" href="">{{result.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </h1>
+
+        </div>
+
+        <div>
+            <h1 class="text-center">
+                and talk about
+                <div class="input-wrapper-long">
+                    <input ng-model="topicInput" ng-blur="closeTopicsResults()" ng-focus="openTopicsResults()" type="text" class="input-underlined-long" />
+
+                    <div class="topicResults">
+                        <ul class="lookahead" ng-class="{shown: topicsOpen, hidden: !topicsOpen}">
+                            <li class="lookahead-element" ng-repeat="result in topicSearchResults | limitTo:5" require focus ng-mousedown="selectTopicOption(result)">
+                                <a class="lookahead-link" href="">{{result.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </h1>
+
+        </div>
+
+        <button type="button" class="btn btn-success btn-submit">Send Invite</button>
+
+
+    </div>
+}
