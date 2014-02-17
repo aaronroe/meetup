@@ -26,6 +26,11 @@ public class Application extends JavaController {
         return ok(proposition.render(form(Proposition.class)));
     }
 
+    public static Result success() {
+        return ok(success.render());
+    }
+
+    @RequiresAuthentication(clientName = "CasClient")
     public static Result handleForm() {
         final Form<Proposition> filledForm = form(Proposition.class).bindFromRequest();
 
@@ -36,7 +41,7 @@ public class Application extends JavaController {
             Proposition proposition = filledForm.get();
         }
 
-        return redirect(controllers.routes.Application.index());
+        return redirect(controllers.routes.Application.success());
     }
 
     public static Result locationsJSON() {

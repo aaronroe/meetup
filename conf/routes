@@ -4,9 +4,10 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-
 # Proposition page
 GET     /form                       controllers.Application.proposition()
+# Success page
+GET     /success                    controllers.Application.success()
 
 # Form submission
 POST    /form/submit                controllers.Application.handleForm()
