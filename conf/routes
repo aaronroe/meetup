@@ -13,8 +13,9 @@ GET     /success                    controllers.Application.success()
 POST    /form/submit                controllers.Application.handleForm()
 
 # JSON files
-GET     /api/locations.json         controllers.Application.locationsJSON()
-GET     /api/topics.json            controllers.Application.topicsJSON()
+GET     /api/locations.json         controllers.Assets.at(path="/public", file="/data/locations.json")
+GET     /api/topics.json            controllers.Assets.at(path="/public", file="/data/topics.json")
+GET     /api/students.json          controllers.Assets.at(path="/public", file="/data/students.json")
 
 # CAS callback
 GET   /callback               org.pac4j.play.CallbackController.callback()

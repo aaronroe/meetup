@@ -1,6 +1,14 @@
 [
-    "Brochstein",
-    "Coffeehouse",
-    "Valhalla",
-    "Willy's Pub"
+  {
+    "name":"Brochstein"
+  },
+  {
+    "name":"Coffeehouse"
+  },
+  {
+    "name":"Valhalla"
+  },
+  {
+    "name":"Willy's Pub"
+  }
 ]
