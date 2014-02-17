@@ -10,12 +10,13 @@ meetupApp.controller('landingPageCtrl', function() {
         'squirrels.',
         'romance.',
         'existentialism.',
-        'o-week.',
+        'O-Week.',
         'technology.',
         'ethics.',
         'religion.',
-        'star trek.',
-        'coffee'
+        'japanese film.',
+        'coffee.',
+        'good ice cream.'
     ];  // list of topics
 
     var txt = $('#topics');  // The container in which to render the list
