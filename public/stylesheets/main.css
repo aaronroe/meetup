@@ -35,8 +35,15 @@
 }
 
 .input-wrapper {
+    text-align: left;
     display: inline-block;
     width: 300px;
+}
+
+.input-wrapper-long {
+
+    display: inline-block;
+    width: 600px;
 }
 
 .lookahead {
