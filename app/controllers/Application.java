@@ -86,6 +86,20 @@ public class Application extends Controller {
                 "{\"name\": \"Jewish Studies\"}," +
                 "{\"name\": \"Mathematics\"}," +
                 "{\"name\": \"Poverty, Justice, and Human Capabilities\"}," +
+                "{\"name\": \"Programming\"}," +
+                "{\"name\": \"Web Development\"}," +
+                "{\"name\": \"Medicine\"}," +
+                "{\"name\": \"Ethics\"}," +
+                "{\"name\": \"Anime\"}," +
+                "{\"name\": \"Movies\"}," +
+                "{\"name\": \"Film\"}," +
+                "{\"name\": \"Culture\"}," +
+                "{\"name\": \"Entrepreneurship\"}," +
+                "{\"name\": \"The Environment\"}," +
+                "{\"name\": \"good restaurants\"}," +
+                "{\"name\": \"Travel\"}," +
+                "{\"name\": \"studying abroad\"}," +
+                "{\"name\": \"whatever you feel like talking about!\"}," +
                 "{\"name\": \"Sociology\"}" +
                 "]");
     }
