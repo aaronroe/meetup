@@ -1,6 +1,8 @@
-@()
+@(propForm: Form[_])
 
 @main("Meet Up!") {
+    @helper.form(action = routes.Application.handleForm()) {
+
     <h3 class="text-center alert alert-success">Invite someone to meet up!</h3>
 
     <div class="proposition" ng-controller="propositionCtrl">
@@ -45,8 +47,9 @@
 
         </div>
 
-        <button type="button" class="btn btn-success btn-submit">Send Invite</button>
+        <input type="submit" class="btn btn-success btn-submit" value="Send Invite">
 
 
     </div>
+    }
 }

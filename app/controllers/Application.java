@@ -1,12 +1,19 @@
 package controllers;
 
+import models.forms.Proposition;
 import play.*;
+import play.data.Form;
 import play.mvc.*;
 
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
 import views.html.*;
+
+import static play.data.Form.form;
+import static play.mvc.Results.badRequest;
+import static play.mvc.Results.ok;
+import static play.mvc.Results.redirect;
 
 public class Application extends JavaController {
 
@@ -16,7 +23,20 @@ public class Application extends JavaController {
 
     @RequiresAuthentication(clientName = "CasClient")
     public static Result proposition() {
-        return ok(proposition.render());
+        return ok(proposition.render(form(Proposition.class)));
+    }
+
+    public static Result handleForm() {
+        final Form<Proposition> filledForm = form(Proposition.class).bindFromRequest();
+
+        if (filledForm.hasErrors()) {
+            return badRequest(proposition.render(filledForm));
+        }
+        else {
+            Proposition proposition = filledForm.get();
+        }
+
+        return redirect(controllers.routes.Application.index());
     }
 
     public static Result locationsJSON() {
