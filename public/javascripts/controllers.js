@@ -113,11 +113,11 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     $scope.closeTopicsResults = function() {
         $scope.topicsOpen = false;
     };
-    // init the location input.
+    // init the topic input.
     $scope.topicInput = "";
     // action to take if a topic option is selected.
-    $scope.selectTopicOption = function(location) {
-        $scope.topicInput = location.name;
+    $scope.selectTopicOption = function(topic) {
+        $scope.topicInput = topic.name;
         $scope.topicsOpen = false;
     };
     // get the json with the topics.
@@ -142,6 +142,54 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
             } else {
                 // get search results for what someone types in.
                 $scope.topicSearchResults = topicSearcher.search(newValue);
+            }
+        }
+    });
+
+    // this is what will perform search over persons.
+    var personSearcher;
+    // declare the list for the persons.
+    var personsList;
+    // whether or not the persons typeahead should be open
+    $scope.personsOpen = false;
+    // helper function that closes all results and opens the desired one.
+    $scope.openPersonsResults = function() {
+        closeAllResults();
+        $scope.personsOpen = true;
+    };
+    // helper function that closes the results for persons.
+    $scope.closePersonsResults = function() {
+        $scope.personsOpen = false;
+    };
+    // init the persons input.
+    $scope.personInput = "";
+    // action to take if a persons option is selected.
+    $scope.selectPersonOption = function(person) {
+        $scope.personInput = person.name;
+        $scope.personOpen = false;
+    };
+    // get the json with the persons.
+    $http.get('api/students.json').then(function(result) {
+        // set the fuse searcher.
+        var options = {
+          keys: ['name']
+        }
+
+        personSearcher = new Fuse(result.data, options);
+
+        // init the list of persons and the person search results.
+        personList = result.data;
+        $scope.personSearchResults = personList;
+    });
+    // watch the person input and change the search results accordingly.
+    $scope.$watch('personInput', function(newValue, oldValue) {
+        if (personSearcher !== undefined) {
+            // check to see if new value is an empty string
+            if (newValue === "") {
+                $scope.personSearchResults = personList;
+            } else {
+                // get search results for what someone types in.
+                $scope.personSearchResults = personSearcher.search(newValue);
             }
         }
     });
