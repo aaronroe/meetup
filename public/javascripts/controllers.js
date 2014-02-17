@@ -1,7 +1,22 @@
 var meetupApp = angular.module('meetupApp', []);
 
 meetupApp.controller('landingPageCtrl', function() {
-    var list = ['music.', 'psycho linguistics.', 'politics.', 'life.', 'relationships.'];  // list of blurbs
+    var list = [
+        'music.',
+        'linguistics.',
+        'politics.',
+        'life.',
+        'relationships.',
+        'squirrels.',
+        'romance.',
+        'existentialism.',
+        'o-week.',
+        'technology.',
+        'ethics.',
+        'religion.',
+        'star trek.',
+        'coffee'
+    ];  // list of topics
 
     var txt = $('#topics');  // The container in which to render the list
 
@@ -12,9 +27,18 @@ meetupApp.controller('landingPageCtrl', function() {
       centered: true           // Centers the text relative to its container
     }
 
+    list = shuffle(list);
+
     txt.textualizer(list, options); // textualize it!
 
     txt.textualizer('start'); // start
+
+    //+ Jonas Raoni Soares Silva
+    //@ http://jsfromhell.com/array/shuffle [v1.0]
+    function shuffle(o){ //v1.0
+        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+        return o;
+    };
 });
 
 meetupApp.controller('propositionCtrl', function($scope, $http) {

@@ -108,6 +108,7 @@ public class Application extends JavaController {
                 "{\"name\": \"Travel\"}," +
                 "{\"name\": \"studying abroad\"}," +
                 "{\"name\": \"whatever you feel like talking about!\"}," +
+                "{\"name\": \"Relationships\"}," +
                 "{\"name\": \"Sociology\"}" +
                 "]");
     }
