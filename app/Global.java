@@ -3,6 +3,7 @@ import play.GlobalSettings;
 
 import org.pac4j.cas.client.CasClient;
 import org.pac4j.core.client.Clients;
+import org.pac4j.play.PlayLogoutHandler;
 
 import org.pac4j.play.Config;
 
@@ -14,7 +15,7 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         // CAS
         final CasClient casClient = new CasClient();
-        // casClient.setLogoutHandler(new PlayLogoutHandler());
+        casClient.setLogoutHandler(new PlayLogoutHandler());
         // casClient.setCasProtocol(CasProtocol.SAML);
         // casClient.setGateway(true);
         /*final CasProxyReceptor casProxyReceptor = new CasProxyReceptor();
