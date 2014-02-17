@@ -93,10 +93,10 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     });
     // watch the topic input and change the search results accordingly.
     $scope.$watch('topicInput', function(newValue, oldValue) {
-        if (locationSearcher !== undefined) {
+        if (topicSearcher !== undefined) {
             // check to see if new value is an empty string
             if (newValue === "") {
-                $scope.topicSearchResults = locationList;
+                $scope.topicSearchResults = topicList;
             } else {
                 // get search results for what someone types in.
                 $scope.topicSearchResults = topicSearcher.search(newValue);
