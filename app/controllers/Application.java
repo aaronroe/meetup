@@ -4,11 +4,13 @@ import play.*;
 import play.mvc.*;
 
 import org.pac4j.play.java.JavaController;
+import org.pac4j.play.java.RequiresAuthentication;
 
 import views.html.*;
 
 public class Application extends JavaController {
 
+    @RequiresAuthentication(clientName = "CasClient")
     public static Result index() {
         return ok(index.render());
     }

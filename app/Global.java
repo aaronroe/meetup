@@ -20,7 +20,7 @@ public class Global extends GlobalSettings {
         /*final CasProxyReceptor casProxyReceptor = new CasProxyReceptor();
         casProxyReceptor.setCallbackUrl("http://localhost:9000/casProxyCallback");
         casClient.setCasProxyReceptor(casProxyReceptor);*/
-        casClient.setCasLoginUrl("http://localhost:8080/cas/login");
+        casClient.setCasLoginUrl("https://netid.rice.edu/cas/login");
 
         final Clients clients = new Clients("http://localhost:9000/callback", casClient); // , casProxyReceptor);
         Config.setClients(clients);
