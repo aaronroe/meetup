@@ -13,7 +13,7 @@
             <h1 class="text-center">
                 I would love to buy you a drink sometime at
                 <div class="input-wrapper">
-                    <input ng-model="locationInput" ng-focus="openLocationsResults()" type="text" class="input-underlined" />
+                    <input ng-model="locationInput" ng-blur="closeLocationsResults()" ng-focus="openLocationsResults()" type="text" class="input-underlined" />
 
                     <div class="locationResults">
                         <ul class="lookahead" ng-class="{shown: locationsOpen, hidden: !locationsOpen}">
@@ -31,7 +31,7 @@
             <h1 class="text-center">
                 and talk about
                 <div class="input-wrapper">
-                    <input ng-model="topicInput" ng-focus="openTopicsResults()" type="text" class="input-underlined-long" />
+                    <input ng-model="topicInput" ng-blur="closeTopicsResults()" ng-focus="openTopicsResults()" type="text" class="input-underlined-long" />
 
                     <div class="topicResults">
                         <ul class="lookahead" ng-class="{shown: topicsOpen, hidden: !topicsOpen}">

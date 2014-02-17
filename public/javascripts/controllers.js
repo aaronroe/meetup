@@ -15,9 +15,13 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     // whether or not the locations typeahead should be open
     $scope.locationsOpen = false;
     // helper function that closes all results and opens the desired one.
-    $scope.openLocationsResults = function () {
+    $scope.openLocationsResults = function() {
         closeAllResults();
         $scope.locationsOpen = true;
+    };
+    // helper function that closes the results for locations.
+    $scope.closeLocationsResults = function() {
+        $scope.locationsOpen = false;
     };
     // init the location input.
     $scope.locationInput = "";
@@ -59,9 +63,13 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     // whether or not the topics typeahead should be open
     $scope.topicsOpen = false;
     // helper function that closes all results and opens the desired one.
-    $scope.openTopicsResults = function () {
+    $scope.openTopicsResults = function() {
         closeAllResults();
         $scope.topicsOpen = true;
+    };
+    // helper function that closes the results for topics.
+    $scope.closeTopicsResults = function() {
+        $scope.topicsOpen = false;
     };
     // init the location input.
     $scope.topicInput = "";
@@ -81,7 +89,7 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
 
         // init the list of topics and the topic search results.
         topicList = result.data;
-        $scope.topicSearchResults = locationList;
+        $scope.topicSearchResults = topicList;
     });
     // watch the topic input and change the search results accordingly.
     $scope.$watch('topicInput', function(newValue, oldValue) {
