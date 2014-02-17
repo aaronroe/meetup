@@ -6,8 +6,8 @@ meetupApp.controller('landingPageCtrl', function() {
     var txt = $('#topics');  // The container in which to render the list
 
     var options = {
-      duration: 500,          // Time (ms) each blurb will remain on screen
-      rearrangeDuration: 500, // Time (ms) a character takes to reach its position
+      duration: 200,          // Time (ms) each blurb will remain on screen
+      rearrangeDuration: 100, // Time (ms) a character takes to reach its position
       effect: 'fadeIn',        // Animation effect the characters use to appear
       centered: true           // Centers the text relative to its container
     }
