@@ -3,9 +3,11 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
+import org.pac4j.play.java.JavaController;
+
 import views.html.*;
 
-public class Application extends Controller {
+public class Application extends JavaController {
 
     public static Result index() {
         return ok(index.render());
