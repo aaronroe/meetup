@@ -4,6 +4,10 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Class that represents an invitation.
@@ -36,8 +40,42 @@ public class Invitation extends Model {
      * Default constructor for invitation.
      */
     public Invitation() {
-        this.verificationCode = "";
+        this.verificationCode = generateVerificationCode();
         this.responded = false;
+    }
+
+    /**
+     * Generates a random verification code that is unique.
+     * @return A random verification code that is unique.
+     */
+    private String generateVerificationCode() {
+        SecureRandom random = new SecureRandom();
+
+        String code = null;
+        boolean foundUnique = false;
+        while (foundUnique == false) {
+            code = new BigInteger(130, random).toString(32);
+            if(isCodeUnique(code)) {
+                foundUnique = true;
+            }
+        }
+        return code;
+    }
+
+    /**
+     * Gets whether or not a code is unique by checking it against the database.
+     * @param code The code to check.
+     * @return Whether or not the code is unique in the database.
+     */
+    public boolean isCodeUnique(String code) {
+        List<Invitation> invitationList = this.find.all();
+        for (Invitation invitation : invitationList) {
+            if (invitation.getVerificationCode().equals(code)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -51,4 +89,19 @@ public class Invitation extends Model {
         return invitation;
     }
 
+    /**
+     * Getter for verification code.
+     * @return Gets the verification code for this invitation.
+     */
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    /**
+     * Getter for whether or not this invitation has been responded to.
+     * @return Gets whether or not this invitation has been responded to.
+     */
+    public boolean isResponded() {
+        return responded;
+    }
 }
