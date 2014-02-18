@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Class that represents an invitation.
@@ -39,8 +38,8 @@ public class Invitation extends Model {
     /**
      * Default constructor for invitation.
      */
-    public Invitation() {
-        this.verificationCode = generateVerificationCode();
+    public Invitation(String verificationCode) {
+        this.verificationCode = verificationCode;
         this.responded = false;
     }
 
@@ -48,7 +47,7 @@ public class Invitation extends Model {
      * Generates a random verification code that is unique.
      * @return A random verification code that is unique.
      */
-    private String generateVerificationCode() {
+    public static String generateVerificationCode() {
 //        SecureRandom random = new SecureRandom();
 
         String code = null;
@@ -68,13 +67,13 @@ public class Invitation extends Model {
      * @param code The code to check.
      * @return Whether or not the code is unique in the database.
      */
-    private boolean isCodeUnique(String code) {
-//         List<Invitation> invitationList = Invitation.find.all();
-//        for (Invitation invitation : invitationList) {
-//            if (invitation.getVerificationCode().equals(code)) {
-//                return false;
-//            }
-//        }
+    private static boolean isCodeUnique(String code) {
+        List<Invitation> invitationList = Invitation.find.all();
+        for (Invitation invitation : invitationList) {
+            if (invitation.getVerificationCode().equals(code)) {
+                return false;
+            }
+        }
 
         return true;
     }
@@ -84,7 +83,7 @@ public class Invitation extends Model {
      * @return The newly created invitation.
      */
     public static Invitation create() {
-        Invitation invitation = new Invitation();
+        Invitation invitation = new Invitation(Invitation.generateVerificationCode());
         invitation.save();
 
         return invitation;
