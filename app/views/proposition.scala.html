@@ -36,6 +36,7 @@
                         </ul>
                     </div>
                 </div>
+                ,
             </h1>
 
         </div>
@@ -45,7 +46,6 @@
                 and talk about
                 <div class="input-wrapper-long">
                     <input ng-model="topicInput" ng-blur="closeTopicsResults()" ng-focus="openTopicsResults()" type="text" class="input-underlined-long" />
-
                     <div class="topicResults">
                         <ul class="lookahead" ng-class="{shown: topicsOpen, hidden: !topicsOpen}">
                             <li class="lookahead-element" ng-repeat="result in topicSearchResults | limitTo:5" require focus ng-mousedown="selectTopicOption(result)">
@@ -54,8 +54,8 @@
                         </ul>
                     </div>
                 </div>
+                .
             </h1>
-
         </div>
 
         <input type="submit" class="btn btn-success btn-submit" value="Send Invite">
