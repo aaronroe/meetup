@@ -4,7 +4,6 @@ import com.typesafe.plugin.MailerPlugin;
 import models.Invitation;
 import models.forms.Proposition;
 import org.pac4j.core.profile.CommonProfile;
-import play.*;
 import play.data.Form;
 import play.mvc.*;
 
@@ -49,7 +48,7 @@ public class Application extends JavaController {
             Proposition proposition = filledForm.get();
 
             // create the invitation in the database.
-            Invitation invitation = Invitation.create(netId+"@rice.edu", proposition.email, proposition.location, proposition.topic);
+            Invitation invitation = Invitation.create(proposition.name, netId+"@rice.edu", proposition.email, proposition.location, proposition.topic);
 
             MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
             mail.setSubject("You have received a Rice Meetup Invite!");
@@ -72,8 +71,20 @@ public class Application extends JavaController {
             return ok("Invalid url.");
         }
         else {
+            // set the invitation as responded and send a notification email.
             invitation.setResponded(true);
-            // todo: let the inviter know the person accepted.
+
+            MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+            mail.setSubject("Your Rice Meetup invite has been accepted!");
+            mail.setRecipient(invitation.getInviterEmail());
+            mail.setFrom(invitation.getInvitedEmail());
+            mail.sendHtml("<html>\n" +
+                    "\t<h1 style=\"color: #333\">"+invitation.getInviterName()+" has accepted your invite!</h1>\n" +
+                    "\t<h1 style=\"color: #333\">To jog your memory, you offered to buy a drink from <i>"+invitation.getLocation()+"</i> in order to talk about <i>"+invitation.getTopic()+"</i>.</h1>\n" +
+                    "\t<h1 style=\"color: #333\">You can reply to this email to schedule a proper time.</h1>\n" +
+                    "\t<h1 style=\"color: #333\">Hope things work out!</h1>\n" +
+                    "</html>" );
+
             return ok("You have successfully accepted your invitation to meet up!");
         }
     }

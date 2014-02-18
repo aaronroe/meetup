@@ -28,14 +28,19 @@ public class Invitation extends Model {
     private String verificationCode;
 
     /**
-     * The email of the inviter.
+     * The name of the inviterEmail.
      */
-    private String inviter;
+    private String inviterName;
 
     /**
-     * The email of the invited.
+     * The email of the inviterEmail.
      */
-    private String invited;
+    private String inviterEmail;
+
+    /**
+     * The email of the invitedEmail.
+     */
+    private String invitedEmail;
 
     /**
      * The location of the invitation.
@@ -59,12 +64,19 @@ public class Invitation extends Model {
 
     /**
      * Default constructor for invitation.
+     * @param inviterName Name of the inviter.
+     * @param inviterEmail Email of the inviter.
+     * @param invitedEmail Email of the invited.
+     * @param location The location for the invitation.
+     * @param topic The topic for the invitation.
+     * @param verificationCode The verification code to accept/reject the invitation.
      */
-    public Invitation(String inviter, String invited, String location, String topic, String verificationCode) {
+    public Invitation(String inviterName, String inviterEmail, String invitedEmail, String location, String topic, String verificationCode) {
         this.verificationCode = verificationCode;
         this.responded = false;
-        this.inviter = invited;
-        this.invited = invited;
+        this.inviterName = inviterName;
+        this.inviterEmail = inviterEmail;
+        this.invitedEmail = invitedEmail;
         this.location = location;
         this.topic = topic;
     }
@@ -119,14 +131,15 @@ public class Invitation extends Model {
 
     /**
      * Static method that creates an invitation and encapsulates saving.
-     * @param inviter The email of the person sending the invitation.
-     * @param invited The email of the person receiving the invitation.
+     * @param inviterName The name of the inviter.
+     * @param inviterEmail The email of the person sending the invitation.
+     * @param invitedEmail The email of the person receiving the invitation.
      * @param location The location for the invitation.
      * @param topic The topic for the invitation.
      * @return The newly created invitation.
      */
-    public static Invitation create(String inviter, String invited, String location, String topic) {
-        Invitation invitation = new Invitation(inviter, invited, location, topic, Invitation.generateVerificationCode());
+    public static Invitation create(String inviterName, String inviterEmail, String invitedEmail, String location, String topic) {
+        Invitation invitation = new Invitation(inviterName, inviterEmail, invitedEmail, location, topic, Invitation.generateVerificationCode());
         invitation.save();
 
         return invitation;
@@ -149,11 +162,36 @@ public class Invitation extends Model {
     }
 
     /**
+     * Getter for the name of the person inviting.
+     * @return The name of the person inviting.
+     */
+    public String getInviterName() {
+        return inviterName;
+    }
+
+    /**
+     * Getter for the email of the person who initiated the invite.
+     * @return The email of the person who initiated the invite.
+     */
+    public String getInviterEmail() {
+        return inviterEmail;
+    }
+
+    /**
+     * Getter for the email of the person who is the target of the invite.
+     * @return The person who is the one being invitedEmail.
+     */
+    public String getInvitedEmail() {
+        return invitedEmail;
+    }
+
+    /**
      * Getter for the topic of this invitation.
      * @return The topic of this invitation.
      */
     public String getTopic() {
         return topic;
+
     }
 
     /**
