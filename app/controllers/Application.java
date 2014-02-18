@@ -50,7 +50,7 @@ public class Application extends JavaController {
             MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
             mail.setSubject("You have received a Rice Meetup Invite!");
             mail.setRecipient(proposition.email);
-            mail.setFrom(netId+"@rice.edu");
+            mail.setFrom(netId + "@rice.edu");
             mail.sendHtml("<html>\n" +
                     "\t<h1 style=\"color: #333\">Hello "+proposition.name+"!</h1>\n" +
                     "\t<h1 style=\"color: #333\">I would love to buy you a drink from <i>"+proposition.location+"</i> sometime and talk about <i>"+proposition.topic+"</i>.</h1>\n" +
@@ -60,5 +60,14 @@ public class Application extends JavaController {
         }
 
         return redirect(routes.Application.success());
+    }
+
+    public static Result acceptInvitation(String id) {
+
+        return ok();
+    }
+
+    public static Result rejectInvitation(String id) {
+        return ok();
     }
 }

@@ -48,13 +48,12 @@ public class Invitation extends Model {
      * @return A random verification code that is unique.
      */
     public static String generateVerificationCode() {
-//        SecureRandom random = new SecureRandom();
+        SecureRandom random = new SecureRandom();
 
         String code = null;
         boolean foundUnique = false;
         while (!foundUnique) {
-            code = "";
-//            code = new BigInteger(130, random).toString(32);
+            code = new BigInteger(130, random).toString(32);
             if(isCodeUnique(code)) {
                 foundUnique = true;
             }

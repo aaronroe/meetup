@@ -12,6 +12,10 @@ GET     /success                    controllers.Application.success()
 # Form submission
 POST    /form/submit                controllers.Application.handleForm()
 
+# Invitation Responding
+GET     /invitations/:id/accept     controllers.Application.acceptInvitation(id: String)
+GET     /invitations/:id/reject     controllers.Application.rejectInvitation(id: String)
+
 # JSON files
 GET     /api/locations.json         controllers.Assets.at(path="/public", file="/data/locations.json")
 GET     /api/topics.json            controllers.Assets.at(path="/public", file="/data/topics.json")
