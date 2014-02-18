@@ -28,6 +28,9 @@
                     </div>
                 </div>
                 !
+                @if(propForm.hasGlobalErrors) {
+                <span class="label label-danger error">@propForm.globalError.message</span>
+                }
             </h1>
         </div>
 

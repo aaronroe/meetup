@@ -4,10 +4,12 @@ html,body {
     height:100%;
     width:100%;
     background-color: #eee;
+    line-height: 1;
 }
 
 dl {
     margin: 0;
+    height:5px;
 }
 
 // these are just getting in our way, so make it non-visible.
@@ -142,4 +144,11 @@ dt {
 
 .lookahead-link:hover {
     text-decoration: none;
+}
+
+.error {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 400px;
 }
