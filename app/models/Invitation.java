@@ -34,7 +34,7 @@ public class Invitation extends Model {
     /**
      * Finder for invitations.
      */
-    public Finder<Long, Invitation> find = new Finder<Long, Invitation>(Long.class, Invitation.class);
+    public static Finder<Long, Invitation> find = new Finder<Long, Invitation>(Long.class, Invitation.class);
 
     /**
      * Default constructor for invitation.
@@ -49,12 +49,13 @@ public class Invitation extends Model {
      * @return A random verification code that is unique.
      */
     private String generateVerificationCode() {
-        SecureRandom random = new SecureRandom();
+//        SecureRandom random = new SecureRandom();
 
         String code = null;
         boolean foundUnique = false;
-        while (foundUnique == false) {
-            code = new BigInteger(130, random).toString(32);
+        while (!foundUnique) {
+            code = "";
+//            code = new BigInteger(130, random).toString(32);
             if(isCodeUnique(code)) {
                 foundUnique = true;
             }
@@ -67,13 +68,13 @@ public class Invitation extends Model {
      * @param code The code to check.
      * @return Whether or not the code is unique in the database.
      */
-    public boolean isCodeUnique(String code) {
-        List<Invitation> invitationList = this.find.all();
-        for (Invitation invitation : invitationList) {
-            if (invitation.getVerificationCode().equals(code)) {
-                return false;
-            }
-        }
+    private boolean isCodeUnique(String code) {
+//         List<Invitation> invitationList = Invitation.find.all();
+//        for (Invitation invitation : invitationList) {
+//            if (invitation.getVerificationCode().equals(code)) {
+//                return false;
+//            }
+//        }
 
         return true;
     }
