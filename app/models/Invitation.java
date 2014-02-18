@@ -8,6 +8,8 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
 
+import static play.mvc.Controller.request;
+
 /**
  * Class that represents an invitation.
  */
@@ -26,6 +28,16 @@ public class Invitation extends Model {
     private String verificationCode;
 
     /**
+     * The email of the inviter.
+     */
+    private String inviter;
+
+    /**
+     * The email of the invited.
+     */
+    private String invited;
+
+    /**
      * Whether or not a user has responded to the invitation yet.
      */
     private boolean responded;
@@ -38,9 +50,11 @@ public class Invitation extends Model {
     /**
      * Default constructor for invitation.
      */
-    public Invitation(String verificationCode) {
+    public Invitation(String inviter, String invited, String verificationCode) {
         this.verificationCode = verificationCode;
         this.responded = false;
+        this.inviter = inviter;
+        this.invited = invited;
     }
 
     /**
@@ -93,10 +107,12 @@ public class Invitation extends Model {
 
     /**
      * Static method that creates an invitation and encapsulates saving.
+     * @param inviter The email of the person sending the invitation.
+     * @param invited The email of the person receiving the invitation.
      * @return The newly created invitation.
      */
-    public static Invitation create() {
-        Invitation invitation = new Invitation(Invitation.generateVerificationCode());
+    public static Invitation create(String inviter, String invited) {
+        Invitation invitation = new Invitation(inviter, invited, Invitation.generateVerificationCode());
         invitation.save();
 
         return invitation;
@@ -108,6 +124,22 @@ public class Invitation extends Model {
      */
     public String getVerificationCode() {
         return verificationCode;
+    }
+
+    /**
+     * Gets the URL to accept this invitation.
+     * @return The URL to accept this invitation.
+     */
+    public String getAcceptURL() {
+        return controllers.routes.Application.acceptInvitation(getVerificationCode()).absoluteURL(request());
+    }
+
+    /**
+     * Gets the URL to reject this invitation.
+     * @return The URL to reject this invitation.
+     */
+    public String getRejectURL() {
+        return controllers.routes.Application.rejectInvitation(getVerificationCode()).absoluteURL(request());
     }
 
     /**

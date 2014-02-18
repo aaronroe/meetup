@@ -6,6 +6,8 @@
 create table invitation (
   id                        bigint not null,
   verification_code         varchar(255),
+  inviter                   varchar(255),
+  invited                   varchar(255),
   responded                 boolean,
   constraint pk_invitation primary key (id))
 ;

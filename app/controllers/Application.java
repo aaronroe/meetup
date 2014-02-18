@@ -48,6 +48,9 @@ public class Application extends JavaController {
 
             Proposition proposition = filledForm.get();
 
+            // create the invitation in the database.
+            Invitation invitation = Invitation.create(netId+"@rice.edu", proposition.email);
+
             MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
             mail.setSubject("You have received a Rice Meetup Invite!");
             mail.setRecipient(proposition.email);
@@ -55,8 +58,8 @@ public class Application extends JavaController {
             mail.sendHtml("<html>\n" +
                     "\t<h1 style=\"color: #333\">Hello "+proposition.name+"!</h1>\n" +
                     "\t<h1 style=\"color: #333\">I would love to buy you a drink from <i>"+proposition.location+"</i> sometime and talk about <i>"+proposition.topic+"</i>.</h1>\n" +
-                    "\t<button style=\"display: inherit;background-color: #47a447;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a style=\"color: #fff;text-decoration: none;\" href=\"\">Sounds great! When would you like to meet?</a></button>\n" +
-                    "\t<button style=\"display: inherit;background-color: #d9534f;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a style=\"color: #fff;text-decoration: none;\" href=\"\">Sorry, I'm busy and can't meet! Maybe some other time.</a></button>\n" +
+                    "\t<button style=\"display: inherit;background-color: #47a447;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a href=\""+invitation.getAcceptURL()+"\" style=\"color: #fff;text-decoration: none;\" href=\"\">Sounds great! When would you like to meet?</a></button>\n" +
+                    "\t<button style=\"display: inherit;background-color: #d9534f;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a href=\""+invitation.getRejectURL()+"\" style=\"color: #fff;text-decoration: none;\" href=\"\">Sorry, I'm busy and can't meet! Maybe some other time.</a></button>\n" +
                     "</html>" );
         }
 
