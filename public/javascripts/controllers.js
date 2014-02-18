@@ -73,7 +73,7 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
         $scope.locationsOpen = false;
     };
     // get the json with the locations.
-    $http.get('api/locations.json').then(function(result) {
+    $http.get('/api/locations.json').then(function(result) {
         // set the fuse searcher.
         var options = {
           keys: ['name']
@@ -121,7 +121,7 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
         $scope.topicsOpen = false;
     };
     // get the json with the topics.
-    $http.get('api/topics.json').then(function(result) {
+    $http.get('/api/topics.json').then(function(result) {
         // set the fuse searcher.
         var options = {
           keys: ['name']
@@ -163,13 +163,15 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     };
     // init the persons input.
     $scope.personInput = "";
+    $scope.selectedPerson = null;
     // action to take if a persons option is selected.
     $scope.selectPersonOption = function(person) {
-        $scope.personInput = person.name;
         $scope.personOpen = false;
+        $scope.selectedPerson = person;
+        $scope.personInput = $scope.selectedPerson.name;
     };
     // get the json with the persons.
-    $http.get('api/students.json').then(function(result) {
+    $http.get('/api/students.json').then(function(result) {
         // set the fuse searcher.
         var options = {
           keys: ['name']
@@ -184,6 +186,11 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     // watch the person input and change the search results accordingly.
     $scope.$watch('personInput', function(newValue, oldValue) {
         if (personSearcher !== undefined) {
+            // check to see if the text is deviating from the person they selected
+            if ($scope.selectedPerson !== null && newValue !== $scope.selectedPerson.name) {
+                $scope.selectedPerson = null;
+            }
+
             // check to see if new value is an empty string
             if (newValue === "") {
                 $scope.personSearchResults = personList;
@@ -193,5 +200,13 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
             }
         }
     });
+
+    /**
+     * Function called before a submit that preps the selected user field.
+     */
+    $scope.prepareSubmission = function() {
+        $scope.submittedName = $scope.selectedPerson.name;
+        $scope.submittedEmail = $scope.selectedPerson.email;
+    };
 
 });

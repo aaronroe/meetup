@@ -8,8 +8,17 @@
             <h1 class="text-center">
                 Hello
                 <div class="input-wrapper-medium">
+                    @helper.input(propForm("name"),
+                    '_showConstraints -> false,
+                    '_label -> "") { (id, name, value, args) =>
+                        <input name="@name" id="@id" class="hidden" ng-model="submittedName" @toHtmlArgs(args) />
+                    }
+                    @helper.input(propForm("email"),
+                    '_showConstraints -> false,
+                    '_label -> "") { (id, name, value, args) =>
+                        <input name="@name" id="@id" class="hidden" ng-model="submittedEmail" @toHtmlArgs(args) />
+                    }
                     <input ng-model="personInput" ng-blur="closePersonsResults()" ng-focus="openPersonsResults()" type="text" class="input-underlined-medium" />
-
                     <div class="personResults">
                         <ul class="lookahead" ng-class="{shown: personsOpen, hidden: !personsOpen}">
                             <li class="lookahead-element" ng-repeat="result in personSearchResults | limitTo:5" require focus ng-mousedown="selectPersonOption(result)">
@@ -26,8 +35,11 @@
             <h1 class="text-center">
                 I would love to buy you a drink sometime at
                 <div class="input-wrapper">
-                    <input ng-model="locationInput" ng-blur="closeLocationsResults()" ng-focus="openLocationsResults()" type="text" class="input-underlined" />
-
+                    @helper.input(propForm("location"),
+                    '_showConstraints -> false,
+                    '_label -> "") { (id, name, value, args) =>
+                        <input name="@name" id="@id" ng-model="locationInput" ng-blur="closeLocationsResults()" ng-focus="openLocationsResults()" type="text" class="input-underlined" @toHtmlArgs(args) />
+                    }
                     <div class="locationResults">
                         <ul class="lookahead" ng-class="{shown: locationsOpen, hidden: !locationsOpen}">
                             <li class="lookahead-element" ng-repeat="result in locationSearchResults | limitTo:4" require focus ng-mousedown="selectLocationOption(result)">
@@ -45,7 +57,11 @@
             <h1 class="text-center">
                 and talk about
                 <div class="input-wrapper-long">
-                    <input ng-model="topicInput" ng-blur="closeTopicsResults()" ng-focus="openTopicsResults()" type="text" class="input-underlined-long" />
+                    @helper.input(propForm("topic"),
+                    '_showConstraints -> false,
+                    '_label -> "") { (id, name, value, args) =>
+                        <input name="@name" id="@id" ng-model="topicInput" ng-blur="closeTopicsResults()" ng-focus="openTopicsResults()" type="text" class="input-underlined-long" @toHtmlArgs(args) />
+                    }
                     <div class="topicResults">
                         <ul class="lookahead" ng-class="{shown: topicsOpen, hidden: !topicsOpen}">
                             <li class="lookahead-element" ng-repeat="result in topicSearchResults | limitTo:5" require focus ng-mousedown="selectTopicOption(result)">
@@ -58,10 +74,10 @@
             </h1>
         </div>
 
-        <input type="submit" class="btn btn-success btn-submit" value="Send Invite">
+        <input type="submit" class="btn btn-success btn-submit" value="Send Invite" ng-click="prepareSubmission()">
 
         <p>
-            <a href="logout"><button type="button" class="btn btn-danger btn-submit">Logout</button></a>
+            <a href="/logout"><button type="button" class="btn btn-danger btn-submit">Logout</button></a>
         </p>
 
 
