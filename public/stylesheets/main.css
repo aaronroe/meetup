@@ -48,6 +48,15 @@ html,body {
     background-color: #eee;
 }
 
+.input-underlined-medium {
+    width: 500px;
+    text-indent: 10px;
+    border:0;
+    border-bottom:solid 1px #000;
+    outline:none;
+    background-color: #eee;
+}
+
 .input-underlined-long {
     width: 600px;
     text-indent: 10px;
@@ -88,8 +97,14 @@ html,body {
     width: 300px;
 }
 
-.input-wrapper-long {
+.input-wrapper-medium {
+    text-align: left;
+    display: inline-block;
+    width: 500px;
+}
 
+.input-wrapper-long {
+    text-align: left;
     display: inline-block;
     width: 600px;
 }

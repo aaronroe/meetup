@@ -7,12 +7,12 @@
         <div>
             <h1 class="text-center">
                 Hello
-                <div class="input-wrapper">
-                    <input ng-model="personInput" ng-blur="closePersonsResults()" ng-focus="openPersonsResults()" type="text" class="input-underlined" />
+                <div class="input-wrapper-medium">
+                    <input ng-model="personInput" ng-blur="closePersonsResults()" ng-focus="openPersonsResults()" type="text" class="input-underlined-medium" />
 
                     <div class="personResults">
                         <ul class="lookahead" ng-class="{shown: personsOpen, hidden: !personsOpen}">
-                            <li class="lookahead-element" ng-repeat="result in personSearchResults | limitTo:4" require focus ng-mousedown="selectPersonOption(result)">
+                            <li class="lookahead-element" ng-repeat="result in personSearchResults | limitTo:5" require focus ng-mousedown="selectPersonOption(result)">
                                 <a class="lookahead-link" href="">{{result.name}}</a>
                             </li>
                         </ul>

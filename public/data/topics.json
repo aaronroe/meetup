@@ -1,9 +1,15 @@
 [
   {
-    "name":"Ancient Mediterranean Civilizations"
+    "name":"Music "
+  },
+  {
+    "name":"Sociology"
   },
   {
     "name":"Asian Studies"
+  },
+  {
+    "name":"Economics"
   },
   {
     "name":"Art History"
@@ -42,6 +48,9 @@
     "name":"Religious Studies"
   },
   {
+    "name":"Ancient Mediterranean Civilizations"
+  },
+  {
     "name":"Slavic Studies"
   },
   {
@@ -55,9 +64,6 @@
   },
   {
     "name":"Cognitive Sciences"
-  },
-  {
-    "name":"Economics"
   },
   {
     "name":"Managerial Studies"
@@ -75,9 +81,6 @@
     "name":"Psychology"
   },
   {
-    "name":"Sociology"
-  },
-  {
     "name":"Women, Gender, and Sexuality"
   },
   {
@@ -88,9 +91,6 @@
   },
   {
     "name":"Architecture"
-  },
-  {
-    "name":"Music "
   },
   {
     "name":"Astronomy"
