@@ -49,7 +49,7 @@ public class Application extends JavaController {
             Proposition proposition = filledForm.get();
 
             // create the invitation in the database.
-            Invitation invitation = Invitation.create(netId+"@rice.edu", proposition.email);
+            Invitation invitation = Invitation.create(netId+"@rice.edu", proposition.email, proposition.location, proposition.topic);
 
             MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
             mail.setSubject("You have received a Rice Meetup Invite!");

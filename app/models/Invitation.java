@@ -38,6 +38,16 @@ public class Invitation extends Model {
     private String invited;
 
     /**
+     * The location of the invitation.
+     */
+    private String location;
+
+    /**
+     * The location of the topic.
+     */
+    private String topic;
+
+    /**
      * Whether or not a user has responded to the invitation yet.
      */
     private boolean responded;
@@ -50,11 +60,13 @@ public class Invitation extends Model {
     /**
      * Default constructor for invitation.
      */
-    public Invitation(String inviter, String invited, String verificationCode) {
+    public Invitation(String inviter, String invited, String location, String topic, String verificationCode) {
         this.verificationCode = verificationCode;
         this.responded = false;
-        this.inviter = inviter;
+        this.inviter = invited;
         this.invited = invited;
+        this.location = location;
+        this.topic = topic;
     }
 
     /**
@@ -109,10 +121,12 @@ public class Invitation extends Model {
      * Static method that creates an invitation and encapsulates saving.
      * @param inviter The email of the person sending the invitation.
      * @param invited The email of the person receiving the invitation.
+     * @param location The location for the invitation.
+     * @param topic The topic for the invitation.
      * @return The newly created invitation.
      */
-    public static Invitation create(String inviter, String invited) {
-        Invitation invitation = new Invitation(inviter, invited, Invitation.generateVerificationCode());
+    public static Invitation create(String inviter, String invited, String location, String topic) {
+        Invitation invitation = new Invitation(inviter, invited, location, topic, Invitation.generateVerificationCode());
         invitation.save();
 
         return invitation;
@@ -124,6 +138,22 @@ public class Invitation extends Model {
      */
     public String getVerificationCode() {
         return verificationCode;
+    }
+
+    /**
+     * Getter for the location for the invitation.
+     * @return The location for this invitation.
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * Getter for the topic of this invitation.
+     * @return The topic of this invitation.
+     */
+    public String getTopic() {
+        return topic;
     }
 
     /**

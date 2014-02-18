@@ -8,6 +8,8 @@ create table invitation (
   verification_code         varchar(255),
   inviter                   varchar(255),
   invited                   varchar(255),
+  location                  varchar(255),
+  topic                     varchar(255),
   responded                 boolean,
   constraint pk_invitation primary key (id))
 ;
