@@ -1,6 +1,7 @@
 package controllers;
 
 import com.typesafe.plugin.MailerPlugin;
+import models.Invitation;
 import models.forms.Proposition;
 import org.pac4j.core.profile.CommonProfile;
 import play.*;
@@ -62,12 +63,27 @@ public class Application extends JavaController {
         return redirect(routes.Application.success());
     }
 
-    public static Result acceptInvitation(String id) {
-
-        return ok();
+    public static Result acceptInvitation(String verificationCode) {
+        Invitation invitation = Invitation.getInvitationByVerificationCode(verificationCode);
+        if (invitation == null || invitation.isResponded()) {
+            return ok("Invalid url.");
+        }
+        else {
+            invitation.setResponded(true);
+            // todo: let the inviter know the person accepted.
+            return ok("You have successfully accepted your invitation to meet up!");
+        }
     }
 
-    public static Result rejectInvitation(String id) {
-        return ok();
+    public static Result rejectInvitation(String verificationCode) {
+        Invitation invitation = Invitation.getInvitationByVerificationCode(verificationCode);
+        if (invitation == null || invitation.isResponded()) {
+            return ok("Invalid url.");
+        }
+        else {
+            invitation.setResponded(true);
+            // todo: let the inviter know the person rejected.
+            return ok("You have successfully rejected your invitation to meet up... : (");
+        }
     }
 }

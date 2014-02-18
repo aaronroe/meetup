@@ -44,6 +44,20 @@ public class Invitation extends Model {
     }
 
     /**
+     * Gets the invitation according to what its verification code is.
+     * @return The invitation corresponding to the code, null otherwise.
+     */
+    public static Invitation getInvitationByVerificationCode(String verificationCode) {
+        List<Invitation> invitationList = Invitation.find.all();
+        for (Invitation invitation : invitationList) {
+            if (invitation.getVerificationCode().equals(verificationCode)) {
+                return invitation;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Generates a random verification code that is unique.
      * @return A random verification code that is unique.
      */
@@ -102,5 +116,14 @@ public class Invitation extends Model {
      */
     public boolean isResponded() {
         return responded;
+    }
+
+    /**
+     * Setter for responded.
+     * @param responded What the new value of responded should be.
+     */
+    public void setResponded(boolean responded) {
+        this.responded = responded;
+        this.save();
     }
 }
