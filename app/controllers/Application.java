@@ -79,11 +79,12 @@ public class Application extends JavaController {
             mail.setRecipient(invitation.getInviterEmail());
             mail.setFrom(invitation.getInvitedEmail());
             mail.sendHtml("<html>\n" +
-                    "\t<h1 style=\"color: #333\">"+invitation.getInviterName()+" has accepted your invite!</h1>\n" +
+                    "\t<br />\n" +
+                    "\t<h1 style=\"background-color: #5cb85c;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">"+invitation.getInviterName()+" has accepted your invite!</h1>\n" +
                     "\t<h1 style=\"color: #333\">To jog your memory, you offered to buy a drink from <i>"+invitation.getLocation()+"</i> in order to talk about <i>"+invitation.getTopic()+"</i>.</h1>\n" +
-                    "\t<h1 style=\"color: #333\">You can reply to this email to schedule a proper time.</h1>\n" +
-                    "\t<h1 style=\"color: #333\">Hope things work out!</h1>\n" +
-                    "</html>" );
+                    "\t<h2 style=\"color: #333\">You can reply to this email to schedule a proper time.</h2>\n" +
+                    "\t<h2 style=\"color: #333\">Hope things work out!</h2>\n" +
+                    "</html>");
 
             return ok("You have successfully accepted your invitation to meet up!");
         }
@@ -95,8 +96,19 @@ public class Application extends JavaController {
             return ok("Invalid url.");
         }
         else {
+            // set the invitation as responded and send a notification email.
             invitation.setResponded(true);
-            // todo: let the inviter know the person rejected.
+
+            MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+            mail.setSubject("Your Rice Meetup invite has been declined...");
+            mail.setRecipient(invitation.getInviterEmail());
+            mail.setFrom(invitation.getInvitedEmail());
+            mail.sendHtml("<html>\n" +
+                    "\t<br />\n" +
+                    "\t<h1 style=\"background-color: #d9534f;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">Sadly, "+invitation.getInviterName()+" has declined your invite...</h1>\n" +
+                    "\t<h2 style=\"color: #333\">Sorry and hope things work out next time!</h2>\n" +
+                    "</html>");
+
             return ok("You have successfully rejected your invitation to meet up... : (");
         }
     }
