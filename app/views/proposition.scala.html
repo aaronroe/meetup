@@ -22,7 +22,7 @@
                     <div class="personResults">
                         <ul class="lookahead" ng-class="{shown: personsOpen, hidden: !personsOpen}">
                             <li class="lookahead-element" ng-repeat="result in personSearchResults | limitTo:5" require focus ng-mousedown="selectPersonOption(result)">
-                                <a class="lookahead-link" href="">{{result.name}}</a>
+                                <a class="lookahead-link" href="">{{result.name}} ({{result.college}})</a>
                             </li>
                         </ul>
                     </div>

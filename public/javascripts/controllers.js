@@ -168,7 +168,7 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     $scope.selectPersonOption = function(person) {
         $scope.personOpen = false;
         $scope.selectedPerson = person;
-        $scope.personInput = $scope.selectedPerson.name;
+        $scope.personInput = $scope.selectedPerson.name + " (" + $scope.selectedPerson.college + ")";
     };
     // get the json with the persons.
     $http.get('/api/students.json').then(function(result) {
@@ -179,6 +179,12 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
 
         personSearcher = new Fuse(result.data, options);
 
+        // change the college value to make it more simple.
+        for (var i = 0; i < result.data.length; i++) {
+            var student = result.data[i];
+            student.college = student.college.replace(" College", "");
+        };
+
         // init the list of persons and the person search results.
         personList = result.data;
         $scope.personSearchResults = personList;
@@ -187,7 +193,7 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
     $scope.$watch('personInput', function(newValue, oldValue) {
         if (personSearcher !== undefined) {
             // check to see if the text is deviating from the person they selected
-            if ($scope.selectedPerson !== null && newValue !== $scope.selectedPerson.name) {
+            if ($scope.selectedPerson !== null && newValue !== $scope.selectedPerson.name + " (" + $scope.selectedPerson.college + ")") {
                 $scope.selectedPerson = null;
             }
 
