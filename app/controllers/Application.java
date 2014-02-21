@@ -17,6 +17,10 @@ import com.typesafe.plugin.MailerAPI;
 
 import views.html.*;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import static play.data.Form.form;
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.ok;
@@ -45,9 +49,26 @@ public class Application extends JavaController {
             return badRequest(proposition.render(filledForm));
         }
         else {
+            // figure out the appropriate range of days.
+            String possibleDates = "";
+            Calendar currentDate = new GregorianCalendar();
+            for (int i = 0; i < 14; i++) {
+                String year = Integer.toString(currentDate.get(Calendar.YEAR));
+                String month = String.format("%02d", currentDate.get(Calendar.MONTH));
+                String day = String.format("%02d", currentDate.get(Calendar.DAY_OF_MONTH));
+                possibleDates += year+"-"+month+"-"+day;
+                if (i < 13) {
+                    possibleDates += "%7C";
+                }
+
+                // increment the day of the month.
+                currentDate.add(Calendar.DAY_OF_MONTH, 1);
+            }
+
+
             play.libs.WS.url("http://www.when2meet.com/SaveNewEvent.php")
                     .setContentType("application/x-www-form-urlencoded; charset=utf-8")
-                    .post("NewEventName=Meet up!&DateTypes=SpecificDates&PossibleDates=2014-02-23%7C2014-02-24%7C2014-02-25%7C2014-02-26%7C2014-02-27%7C2014-02-28%7C2014-03-01&NoEarlierThan=0&NoLaterThan=0").map(
+                    .post("NewEventName=Meet up!&DateTypes=SpecificDates&PossibleDates="+possibleDates+"&NoEarlierThan=0&NoLaterThan=0").map(
                     new F.Function<WS.Response, Result>() {
                         public Result apply(WS.Response response) {
                             final CommonProfile profile = getUserProfile();
