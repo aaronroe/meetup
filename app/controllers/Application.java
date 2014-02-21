@@ -101,7 +101,7 @@ public class Application extends JavaController {
                     "\t<br />\n" +
                     "\t<h1 style=\"background-color: #5cb85c;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">"+invitation.getInviterName()+" has accepted your invite!</h1>\n" +
                     "\t<h1 style=\"color: #333\">To jog your memory, you offered to buy a drink from <i>"+invitation.getLocation()+"</i> in order to talk about <i>"+invitation.getTopic()+"</i>.</h1>\n" +
-                    "\t<h2 style=\"color: #333\">You can reply to this email to schedule a proper time.</h2>\n" +
+                    "\t<h2 style=\"color: #333\">Here is a <a href=\""+invitation.getWhen2MeetURL()+"\">when2meet</a> to schedule your meet up.</h2>\n" +
                     "\t<h2 style=\"color: #333\">Hope things work out!</h2>\n" +
                     "</html>");
 

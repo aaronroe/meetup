@@ -72,17 +72,18 @@ public class Invitation extends Model {
      * @param inviterName Name of the inviter.
      * @param inviterEmail Email of the inviter.
      * @param invitedEmail Email of the invited.
-     * @param when2MeetURLString URL for the when2meet.
+     * @param when2MeetURL URL for the when2meet.
      * @param location The location for the invitation.
      * @param topic The topic for the invitation.
      * @param verificationCode The verification code to accept/reject the invitation.
      */
-    public Invitation(String inviterName, String inviterEmail, String invitedEmail, String when2MeetURLString, String location, String topic, String verificationCode) {
+    public Invitation(String inviterName, String inviterEmail, String invitedEmail, String when2MeetURL, String location, String topic, String verificationCode) {
         this.verificationCode = verificationCode;
         this.responded = false;
         this.inviterName = inviterName;
         this.inviterEmail = inviterEmail;
         this.invitedEmail = invitedEmail;
+        this.when2MeetURL = when2MeetURL;
         this.location = location;
         this.topic = topic;
     }
@@ -190,6 +191,14 @@ public class Invitation extends Model {
      */
     public String getInvitedEmail() {
         return invitedEmail;
+    }
+
+    /**
+     * Getter for the when2meet url.
+     * @return The when2meet url for this invitation.
+     */
+    public String getWhen2MeetURL() {
+        return when2MeetURL;
     }
 
     /**
