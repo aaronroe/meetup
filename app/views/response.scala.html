@@ -1,0 +1,21 @@
+@(title: String, accepted: Boolean, when2MeetUrl: String)
+
+@main(title) {
+    <div class="index-wrapper">
+    @if(accepted) {
+        <div class="success-text">
+            <h2>You have accepted your invite to meet up!</h2>
+
+            <h2>You can use this <a href="@when2MeetUrl">when2meet</a> to pick a meet up time.</h2>
+        </div>
+    } else {
+        <div>
+            <div class="success-text">
+                <h2>You have rejected your invite to meet up.</h2>
+
+                <h2>Maybe next time :(.</h2>
+            </div>
+        </div>
+    }
+    </div>
+}

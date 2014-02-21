@@ -105,7 +105,7 @@ public class Application extends JavaController {
                     "\t<h2 style=\"color: #333\">Hope things work out!</h2>\n" +
                     "</html>");
 
-            return ok("You have successfully accepted your invitation to meet up!");
+            return ok(response.render("You have successfully accepted your invitation to meet up!", true, invitation.getWhen2MeetURL()));
         }
     }
 
@@ -128,7 +128,7 @@ public class Application extends JavaController {
                     "\t<h2 style=\"color: #333\">Sorry and hope things work out next time!</h2>\n" +
                     "</html>");
 
-            return ok("You have successfully rejected your invitation to meet up... : (");
+            return ok(response.render("You have successfully rejected your invitation to meet up...", false, invitation.getWhen2MeetURL()));
         }
     }
 }
