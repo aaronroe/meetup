@@ -9,6 +9,7 @@ create table invitation (
   inviter_name              varchar(255),
   inviter_email             varchar(255),
   invited_email             varchar(255),
+  when2meet_url             varchar(255),
   location                  varchar(255),
   topic                     varchar(255),
   responded                 boolean,

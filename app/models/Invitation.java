@@ -43,6 +43,11 @@ public class Invitation extends Model {
     private String invitedEmail;
 
     /**
+     * URL for the when2meet for this invitation.
+     */
+    private String when2MeetURL;
+
+    /**
      * The location of the invitation.
      */
     private String location;
@@ -67,11 +72,12 @@ public class Invitation extends Model {
      * @param inviterName Name of the inviter.
      * @param inviterEmail Email of the inviter.
      * @param invitedEmail Email of the invited.
+     * @param when2MeetURLString URL for the when2meet.
      * @param location The location for the invitation.
      * @param topic The topic for the invitation.
      * @param verificationCode The verification code to accept/reject the invitation.
      */
-    public Invitation(String inviterName, String inviterEmail, String invitedEmail, String location, String topic, String verificationCode) {
+    public Invitation(String inviterName, String inviterEmail, String invitedEmail, String when2MeetURLString, String location, String topic, String verificationCode) {
         this.verificationCode = verificationCode;
         this.responded = false;
         this.inviterName = inviterName;
@@ -134,12 +140,13 @@ public class Invitation extends Model {
      * @param inviterName The name of the inviter.
      * @param inviterEmail The email of the person sending the invitation.
      * @param invitedEmail The email of the person receiving the invitation.
+     * @param when2MeetURL The URL for the when2meet for this invite.
      * @param location The location for the invitation.
      * @param topic The topic for the invitation.
      * @return The newly created invitation.
      */
-    public static Invitation create(String inviterName, String inviterEmail, String invitedEmail, String location, String topic) {
-        Invitation invitation = new Invitation(inviterName, inviterEmail, invitedEmail, location, topic, Invitation.generateVerificationCode());
+    public static Invitation create(String inviterName, String inviterEmail, String invitedEmail, String when2MeetURL, String location, String topic) {
+        Invitation invitation = new Invitation(inviterName, inviterEmail, invitedEmail, when2MeetURL, location, topic, Invitation.generateVerificationCode());
         invitation.save();
 
         return invitation;

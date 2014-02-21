@@ -4,7 +4,10 @@ import com.typesafe.plugin.MailerPlugin;
 import models.Invitation;
 import models.forms.Proposition;
 import org.pac4j.core.profile.CommonProfile;
+import play.Play;
 import play.data.Form;
+import play.libs.F;
+import play.libs.WS;
 import play.mvc.*;
 
 import org.pac4j.play.java.JavaController;
@@ -42,24 +45,40 @@ public class Application extends JavaController {
             return badRequest(proposition.render(filledForm));
         }
         else {
-            final CommonProfile profile = getUserProfile();
-            String netId = profile.getId();
+            play.libs.WS.url("http://www.when2meet.com/SaveNewEvent.php")
+                    .setContentType("application/x-www-form-urlencoded; charset=utf-8")
+                    .post("NewEventName=Meet up!&DateTypes=SpecificDates&PossibleDates=2014-02-23%7C2014-02-24%7C2014-02-25%7C2014-02-26%7C2014-02-27%7C2014-02-28%7C2014-03-01&NoEarlierThan=0&NoLaterThan=0").map(
+                    new F.Function<WS.Response, Result>() {
+                        public Result apply(WS.Response response) {
+                            final CommonProfile profile = getUserProfile();
+                            String netId = profile.getId();
 
-            Proposition proposition = filledForm.get();
+                            Proposition proposition = filledForm.get();
 
-            // create the invitation in the database.
-            Invitation invitation = Invitation.create(proposition.name, netId+"@rice.edu", proposition.email, proposition.location, proposition.topic);
+                            // get the created when2meet url.
+                            String responseBody = response.getBody();
+                            String[] splitResponseBody = responseBody.split("'");
+                            String urlArgument = splitResponseBody[1];
+                            String when2MeetUrl = "http://www.when2meet.com"+urlArgument;
 
-            MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
-            mail.setSubject("You have received a Rice Meetup Invite!");
-            mail.setRecipient(proposition.email);
-            mail.setFrom(netId + "@rice.edu");
-            mail.sendHtml("<html>\n" +
-                    "\t<h1 style=\"color: #333\">Hello "+proposition.name+"!</h1>\n" +
-                    "\t<h1 style=\"color: #333\">I would love to buy you a drink from <i>"+proposition.location+"</i> sometime and talk about <i>"+proposition.topic+"</i>.</h1>\n" +
-                    "\t<button style=\"display: inherit;background-color: #47a447;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a href=\""+invitation.getAcceptURL()+"\" style=\"color: #fff;text-decoration: none;\" href=\"\">Sounds great! When would you like to meet?</a></button>\n" +
-                    "\t<button style=\"display: inherit;background-color: #d9534f;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a href=\""+invitation.getRejectURL()+"\" style=\"color: #fff;text-decoration: none;\" href=\"\">Sorry, I'm busy and can't meet! Maybe some other time.</a></button>\n" +
-                    "</html>" );
+                            // create the invitation in the database.
+                            Invitation invitation = Invitation.create(proposition.name, netId+"@rice.edu", proposition.email, when2MeetUrl, proposition.location, proposition.topic);
+
+                            MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+                            mail.setSubject("You have received a Rice Meetup Invite!");
+                            mail.setRecipient(proposition.email);
+                            mail.setFrom(netId + "@rice.edu");
+                            mail.sendHtml("<html>\n" +
+                                    "\t<h1 style=\"color: #333\">Hello "+proposition.name+"!</h1>\n" +
+                                    "\t<h1 style=\"color: #333\">I would love to buy you a drink from <i>"+proposition.location+"</i> sometime and talk about <i>"+proposition.topic+"</i>.</h1>\n" +
+                                    "\t<button style=\"display: inherit;background-color: #47a447;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a href=\""+invitation.getAcceptURL()+"\" style=\"color: #fff;text-decoration: none;\" href=\"\">Sounds great! When would you like to meet?</a></button>\n" +
+                                    "\t<button style=\"display: inherit;background-color: #d9534f;padding: 10px 20px;margin:10px 0;border-radius: 4px;border: 1px solid transparent;font-size: 14px;cursor: pointer;\"><a href=\""+invitation.getRejectURL()+"\" style=\"color: #fff;text-decoration: none;\" href=\"\">Sorry, I'm busy and can't meet! Maybe some other time.</a></button>\n" +
+                                    "</html>" );
+
+                            return ok();
+                        }
+                    }
+            );
         }
 
         return redirect(routes.Application.success());

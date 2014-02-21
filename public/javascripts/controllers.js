@@ -15,8 +15,7 @@ meetupApp.controller('landingPageCtrl', function() {
         'ethics.',
         'religion.',
         'japanese film.',
-        'coffee.',
-        'good ice cream.'
+        'coffee shops.'
     ];  // list of topics
 
     var txt = $('#topics');  // The container in which to render the list
