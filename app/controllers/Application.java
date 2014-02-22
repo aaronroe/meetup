@@ -1,10 +1,10 @@
 package controllers;
 
 import com.typesafe.plugin.MailerPlugin;
+import helper.FingerHelper;
 import models.Invitation;
 import models.forms.Proposition;
 import org.pac4j.core.profile.CommonProfile;
-import play.Play;
 import play.data.Form;
 import play.libs.F;
 import play.libs.WS;
@@ -18,7 +18,6 @@ import com.typesafe.plugin.MailerAPI;
 import views.html.*;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static play.data.Form.form;
@@ -74,6 +73,19 @@ public class Application extends JavaController {
                             final CommonProfile profile = getUserProfile();
                             String netId = profile.getId();
 
+                            // get the person's name from their netId.
+                            String name = FingerHelper.getNameFromNetId(netId);
+
+                            // create the recipient address according to whether they have shared their contact info.
+                            String recipient;
+                            if (name == null) {
+                                recipient = netId + "@rice.edu";
+                            }
+                            else {
+                                recipient = name+" <"+netId + "@rice.edu>";
+                            }
+
+                            // get the responses from the filled out form.
                             Proposition proposition = filledForm.get();
 
                             // get the created when2meet url.
@@ -88,7 +100,7 @@ public class Application extends JavaController {
                             MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
                             mail.setSubject("You have received a Rice Meetup Invite!");
                             mail.setRecipient(proposition.email);
-                            mail.setFrom(netId + "@rice.edu");
+                            mail.setFrom(recipient);
                             mail.sendHtml("<html>\n" +
                                     "\t<h1 style=\"color: #333\">Hello "+proposition.name+"!</h1>\n" +
                                     "\t<h1 style=\"color: #333\">I would love to buy you a drink from <i>"+proposition.location+"</i> sometime and talk about <i>"+proposition.topic+"</i>.</h1>\n" +
