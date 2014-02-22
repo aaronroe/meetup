@@ -51,10 +51,11 @@ public class Application extends JavaController {
             // figure out the appropriate range of days.
             String possibleDates = "";
             Calendar currentDate = new GregorianCalendar();
+            currentDate.setTimeInMillis(System.currentTimeMillis());
             for (int i = 0; i < 14; i++) {
                 String year = Integer.toString(currentDate.get(Calendar.YEAR));
-                String month = String.format("%02d", currentDate.get(Calendar.MONTH));
-                String day = String.format("%02d", currentDate.get(Calendar.DAY_OF_MONTH));
+                String month = String.format("%02d", currentDate.get(Calendar.MONTH) + 1); // months indexed at 0.
+                String day = String.format("%02d", currentDate.get(Calendar.DAY_OF_MONTH) + 1); // days indexed at 0.
                 possibleDates += year+"-"+month+"-"+day;
                 if (i < 13) {
                     possibleDates += "%7C";
@@ -74,16 +75,7 @@ public class Application extends JavaController {
                             String netId = profile.getId();
 
                             // get the person's name from their netId.
-                            String name = FingerHelper.getNameFromNetId(netId);
-
-                            // create the recipient address according to whether they have shared their contact info.
-                            String recipient;
-                            if (name == null) {
-                                recipient = netId + "@rice.edu";
-                            }
-                            else {
-                                recipient = name+" <"+netId + "@rice.edu>";
-                            }
+                            String inviterName = FingerHelper.getNameFromNetId(netId);
 
                             // get the responses from the filled out form.
                             Proposition proposition = filledForm.get();
@@ -95,12 +87,12 @@ public class Application extends JavaController {
                             String when2MeetUrl = "http://www.when2meet.com"+urlArgument;
 
                             // create the invitation in the database.
-                            Invitation invitation = Invitation.create(proposition.name, netId+"@rice.edu", proposition.email, when2MeetUrl, proposition.location, proposition.topic);
+                            Invitation invitation = Invitation.create(inviterName, proposition.name, netId+"@rice.edu", proposition.email, when2MeetUrl, proposition.location, proposition.topic);
 
                             MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
                             mail.setSubject("You have received a Rice Meetup Invite!");
-                            mail.setRecipient(proposition.email);
-                            mail.setFrom(recipient);
+                            mail.setRecipient(invitation.getInvitedEmail());
+                            mail.setFrom(invitation.getInviterEmail());
                             mail.sendHtml("<html>\n" +
                                     "\t<h1 style=\"color: #333\">Hello "+proposition.name+"!</h1>\n" +
                                     "\t<h1 style=\"color: #333\">I would love to buy you a drink from <i>"+proposition.location+"</i> sometime and talk about <i>"+proposition.topic+"</i>.</h1>\n" +
@@ -132,7 +124,7 @@ public class Application extends JavaController {
             mail.setFrom(invitation.getInvitedEmail());
             mail.sendHtml("<html>\n" +
                     "\t<br />\n" +
-                    "\t<h1 style=\"background-color: #5cb85c;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">"+invitation.getInviterName()+" has accepted your invite!</h1>\n" +
+                    "\t<h1 style=\"background-color: #5cb85c;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">"+invitation.getInvitedName()+" has accepted your invite!</h1>\n" +
                     "\t<h1 style=\"color: #333\">To jog your memory, you offered to buy a drink from <i>"+invitation.getLocation()+"</i> in order to talk about <i>"+invitation.getTopic()+"</i>.</h1>\n" +
                     "\t<h2 style=\"color: #333\">Here is a <a href=\""+invitation.getWhen2MeetURL()+"\">when2meet</a> to schedule your meet up.</h2>\n" +
                     "\t<h2 style=\"color: #333\">Hope things work out!</h2>\n" +
@@ -157,7 +149,7 @@ public class Application extends JavaController {
             mail.setFrom(invitation.getInvitedEmail());
             mail.sendHtml("<html>\n" +
                     "\t<br />\n" +
-                    "\t<h1 style=\"background-color: #d9534f;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">Sadly, "+invitation.getInviterName()+" has declined your invite...</h1>\n" +
+                    "\t<h1 style=\"background-color: #d9534f;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">Sadly, "+invitation.getInvitedName()+" has declined your invite...</h1>\n" +
                     "\t<h2 style=\"color: #333\">Sorry and hope things work out next time!</h2>\n" +
                     "</html>");
 

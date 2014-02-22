@@ -6,6 +6,7 @@
 create table invitation (
   id                        bigint not null,
   verification_code         varchar(255),
+  invited_name              varchar(255),
   inviter_name              varchar(255),
   inviter_email             varchar(255),
   invited_email             varchar(255),

@@ -28,7 +28,12 @@ public class Invitation extends Model {
     private String verificationCode;
 
     /**
-     * The name of the inviterEmail.
+     * The name of the invited person.
+     */
+    private String invitedName;
+
+    /**
+     * The name of the person doing the inviting.
      */
     private String inviterName;
 
@@ -69,7 +74,8 @@ public class Invitation extends Model {
 
     /**
      * Default constructor for invitation.
-     * @param inviterName Name of the inviter.
+     * @param inviterName Name of the person doing the inviting.
+     * @param invitedName Name of the invited person.
      * @param inviterEmail Email of the inviter.
      * @param invitedEmail Email of the invited.
      * @param when2MeetURL URL for the when2meet.
@@ -77,10 +83,11 @@ public class Invitation extends Model {
      * @param topic The topic for the invitation.
      * @param verificationCode The verification code to accept/reject the invitation.
      */
-    public Invitation(String inviterName, String inviterEmail, String invitedEmail, String when2MeetURL, String location, String topic, String verificationCode) {
+    public Invitation(String inviterName, String invitedName, String inviterEmail, String invitedEmail, String when2MeetURL, String location, String topic, String verificationCode) {
         this.verificationCode = verificationCode;
         this.responded = false;
         this.inviterName = inviterName;
+        this.invitedName = invitedName;
         this.inviterEmail = inviterEmail;
         this.invitedEmail = invitedEmail;
         this.when2MeetURL = when2MeetURL;
@@ -138,6 +145,7 @@ public class Invitation extends Model {
 
     /**
      * Static method that creates an invitation and encapsulates saving.
+     * @param inviterName Name of the person doing the inviting.
      * @param inviterName The name of the inviter.
      * @param inviterEmail The email of the person sending the invitation.
      * @param invitedEmail The email of the person receiving the invitation.
@@ -146,8 +154,8 @@ public class Invitation extends Model {
      * @param topic The topic for the invitation.
      * @return The newly created invitation.
      */
-    public static Invitation create(String inviterName, String inviterEmail, String invitedEmail, String when2MeetURL, String location, String topic) {
-        Invitation invitation = new Invitation(inviterName, inviterEmail, invitedEmail, when2MeetURL, location, topic, Invitation.generateVerificationCode());
+    public static Invitation create(String inviterName, String invitedName, String inviterEmail, String invitedEmail, String when2MeetURL, String location, String topic) {
+        Invitation invitation = new Invitation(inviterName, invitedName, inviterEmail, invitedEmail, when2MeetURL, location, topic, Invitation.generateVerificationCode());
         invitation.save();
 
         return invitation;
@@ -178,11 +186,24 @@ public class Invitation extends Model {
     }
 
     /**
+     * Getter for the name of the person being invited.
+     * @return The name of the person being invited.
+     */
+    public String getInvitedName() {
+        return invitedName;
+    }
+
+    /**
      * Getter for the email of the person who initiated the invite.
      * @return The email of the person who initiated the invite.
      */
     public String getInviterEmail() {
-        return inviterEmail;
+        if (getInviterName() == null) {
+            return inviterEmail;
+        }
+        else {
+            return getInviterName() + " <" + inviterEmail + ">";
+        }
     }
 
     /**
@@ -190,7 +211,12 @@ public class Invitation extends Model {
      * @return The person who is the one being invitedEmail.
      */
     public String getInvitedEmail() {
-        return invitedEmail;
+        if (getInvitedName() == null) {
+            return invitedEmail;
+        }
+        else {
+            return getInvitedName() + " <" + invitedEmail + ">";
+        }
     }
 
     /**
