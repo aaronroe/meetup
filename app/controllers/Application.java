@@ -135,7 +135,6 @@ public class Application extends JavaController {
                     "</html>");
 
             // send the notification email to the inviter.
-            MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
             mail.setSubject("Your Rice Meetup invite has been accepted!");
             mail.setRecipient(invitation.getInviterEmail());
             mail.setFrom(invitation.getInvitedEmail());
