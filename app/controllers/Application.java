@@ -55,7 +55,7 @@ public class Application extends JavaController {
             for (int i = 0; i < 14; i++) {
                 String year = Integer.toString(currentDate.get(Calendar.YEAR));
                 String month = String.format("%02d", currentDate.get(Calendar.MONTH) + 1); // months indexed at 0.
-                String day = String.format("%02d", currentDate.get(Calendar.DAY_OF_MONTH) + 1); // days indexed at 0.
+                String day = String.format("%02d", currentDate.get(Calendar.DAY_OF_MONTH));
                 possibleDates += year+"-"+month+"-"+day;
                 if (i < 13) {
                     possibleDates += "%7C";
