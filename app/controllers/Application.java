@@ -118,9 +118,23 @@ public class Application extends JavaController {
             return ok(message.render("You have already responded to this invitation!", "You have already responded to this invitation"));
         }
         else {
-            // set the invitation as responded and send a notification email.
+            // set the invitation as responded.
             invitation.setResponded(true);
 
+            // send a confirmation email to the invited.
+            MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+            mail.setSubject("You have accepted an invite to meetup!");
+            mail.setRecipient(invitation.getInvitedEmail());
+            mail.setFrom(invitation.getInviterEmail());
+            mail.sendHtml("<html>\n" +
+                    "\t<br />\n" +
+                    "\t<h1 style=\"background-color: #5cb85c;display: inline;padding: .2em .6em .3em;font-weight: 700;color: #fff;text-align: center;border-radius: .25em;\">You have accepted an invite from "+invitation.getInviterName()+"!</h1>\n" +
+                    "\t<h1 style=\"color: #333\">"+invitation.getInviterName()+" offered to buy you a drink from <i>"+invitation.getLocation()+"</i> in order to talk about <i>"+invitation.getTopic()+"</i>.</h1>\n" +
+                    "\t<h2 style=\"color: #333\">Here is the <a href=\""+invitation.getWhen2MeetURL()+"\">when2meet</a> that you can use for scheduling. Alternatively you can just reply to this email to talk.</h2>\n" +
+                    "\t<h2 style=\"color: #333\">Hope things work out!</h2>\n" +
+                    "</html>");
+
+            // send the notification email to the inviter.
             MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
             mail.setSubject("Your Rice Meetup invite has been accepted!");
             mail.setRecipient(invitation.getInviterEmail());
