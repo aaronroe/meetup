@@ -111,8 +111,11 @@ public class Application extends JavaController {
 
     public static Result acceptInvitation(String verificationCode) {
         Invitation invitation = Invitation.getInvitationByVerificationCode(verificationCode);
-        if (invitation == null || invitation.isResponded()) {
-            return ok("Invalid url.");
+        if (invitation == null) {
+            return ok(message.render("Whoooops!", "We can't find what you're looking for : ("));
+        }
+        else if (invitation.isResponded()) {
+            return ok(message.render("You have already responded to this invitation!", "You have already responded to this invitation"));
         }
         else {
             // set the invitation as responded and send a notification email.
@@ -136,8 +139,11 @@ public class Application extends JavaController {
 
     public static Result rejectInvitation(String verificationCode) {
         Invitation invitation = Invitation.getInvitationByVerificationCode(verificationCode);
-        if (invitation == null || invitation.isResponded()) {
+        if (invitation == null) {
             return ok("Invalid url.");
+        }
+        else if (invitation.isResponded()) {
+            return ok(message.render("You have already responded to this invitation!", "You have already responded to this invitation"));
         }
         else {
             // set the invitation as responded and send a notification email.
