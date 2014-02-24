@@ -68,7 +68,7 @@ public class Application extends JavaController {
 
             play.libs.WS.url("http://www.when2meet.com/SaveNewEvent.php")
                     .setContentType("application/x-www-form-urlencoded; charset=utf-8")
-                    .post("NewEventName=Meet up!&DateTypes=SpecificDates&PossibleDates="+possibleDates+"&NoEarlierThan=0&NoLaterThan=0").map(
+                    .post("NewEventName=Meet up!&DateTypes=SpecificDates&PossibleDates="+possibleDates+"&NoEarlierThan=9&NoLaterThan=0").map(
                     new F.Function<WS.Response, Result>() {
                         public Result apply(WS.Response response) {
                             final CommonProfile profile = getUserProfile();
