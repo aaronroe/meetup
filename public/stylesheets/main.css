@@ -22,7 +22,6 @@ dt {
 .index-wrapper {
     padding: 100px;
     text-align: center;
-    height:100%;
     width:100%;
     overflow:hidden; /* or overflow:auto; if you want scrollbars */
 }
