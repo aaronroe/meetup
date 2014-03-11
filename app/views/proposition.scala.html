@@ -63,15 +63,8 @@
                     @helper.input(propForm("topic"),
                     '_showConstraints -> false,
                     '_label -> "") { (id, name, value, args) =>
-                        <input name="@name" id="@id" ng-model="topicInput" ng-blur="closeTopicsResults()" ng-focus="openTopicsResults()" type="text" class="input-underlined-long" autocomplete="off" @toHtmlArgs(args) />
+                        <input name="@name" id="@id" ng-model="topicInput" type="text" class="input-underlined-long" autocomplete="off" @toHtmlArgs(args) />
                     }
-                    <div class="topicResults">
-                        <ul class="lookahead" ng-class="{shown: topicsOpen, hidden: !topicsOpen}">
-                            <li class="lookahead-element" ng-repeat="result in topicSearchResults | limitTo:5" require focus ng-mousedown="selectTopicOption(result)">
-                                <a class="lookahead-link" href="">{{result.name}}</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 .
             </h1>

@@ -97,54 +97,6 @@ meetupApp.controller('propositionCtrl', function($scope, $http) {
         }
     });
 
-    // this is what will perform search over topics.
-    var topicSearcher;
-    // declare the list for the topics.
-    var topicList;
-    // whether or not the topics typeahead should be open
-    $scope.topicsOpen = false;
-    // helper function that closes all results and opens the desired one.
-    $scope.openTopicsResults = function() {
-        closeAllResults();
-        $scope.topicsOpen = true;
-    };
-    // helper function that closes the results for topics.
-    $scope.closeTopicsResults = function() {
-        $scope.topicsOpen = false;
-    };
-    // init the topic input.
-    $scope.topicInput = "";
-    // action to take if a topic option is selected.
-    $scope.selectTopicOption = function(topic) {
-        $scope.topicInput = topic.name;
-        $scope.topicsOpen = false;
-    };
-    // get the json with the topics.
-    $http.get('/api/topics.json').then(function(result) {
-        // set the fuse searcher.
-        var options = {
-          keys: ['name']
-        }
-
-        topicSearcher = new Fuse(result.data, options);
-
-        // init the list of topics and the topic search results.
-        topicList = result.data;
-        $scope.topicSearchResults = topicList;
-    });
-    // watch the topic input and change the search results accordingly.
-    $scope.$watch('topicInput', function(newValue, oldValue) {
-        if (topicSearcher !== undefined) {
-            // check to see if new value is an empty string
-            if (newValue === "") {
-                $scope.topicSearchResults = topicList;
-            } else {
-                // get search results for what someone types in.
-                $scope.topicSearchResults = topicSearcher.search(newValue);
-            }
-        }
-    });
-
     // this is what will perform search over persons.
     var personSearcher;
     // declare the list for the persons.
